@@ -6,7 +6,19 @@ import { useEffect, useMemo, useState } from "react";
 
 type Locale = "th" | "en";
 
-import { HomeIcon, CheckSquare, HeartPulse, Gift, Layers, Code, Mail } from "lucide-react";
+import {
+  HomeIcon,
+  CheckSquare,
+  HeartPulse,
+  Gift,
+  Layers,
+  Code,
+  Mail,
+  Search,
+  Route,
+  PanelTop,
+  Send,
+} from "lucide-react";
 
 const navTiles = [
   { label: "Home", href: "#home", icon: HomeIcon },
@@ -17,6 +29,38 @@ const navTiles = [
   { label: "Skills", href: "#skills", icon: Code },
   { label: "Contact", href: "#contact", icon: Mail },
 ];
+
+const projectStepIcons = [Search, Route, PanelTop, Send];
+
+function ProjectProcess({
+  label,
+  steps,
+}: {
+  label: string;
+  steps: string[][];
+}) {
+  return (
+    <div className="project-process" aria-label={label}>
+      <span className="project-process__heading">{label}</span>
+      <div className="project-process__list">
+        {steps.map(([title, text], index) => {
+          const Icon = projectStepIcons[index] ?? CheckSquare;
+          return (
+            <article className="project-process__item" key={title}>
+              <div className="project-process__icon" aria-hidden="true">
+                <Icon size={18} strokeWidth={2.4} />
+              </div>
+              <div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 const content = {
   th: {
@@ -56,12 +100,19 @@ const content = {
       outcome:
         "ได้ flow และหน้าจอที่อธิบายขั้นตอนการโหวตได้เป็นระบบ ลดความคลุมเครือระหว่าง business requirement, UX decision และ developer handoff",
       deliverables: ["Voting flow", "User journey", "Confirmation UI", "Backoffice UX/UI", "Developer handoff"],
+      steps: [
+        ["Brief", "ทำความเข้าใจโจทย์ ระบบโหวต และผู้ใช้หลายกลุ่ม"],
+        ["Map requirement", "แยกเงื่อนไข public/private vote และ permission สำคัญ"],
+        ["Design flow/UI", "จัด voting flow, confirmation UI และ state ที่ต้องใช้"],
+        ["Backoffice handoff", "ส่งต่อ screen structure และ note ให้ทีมพัฒนา"],
+      ],
       tags: ["Government", "Voting System", "UX/UI", "Backoffice", "Workflow"],
       detailCta: "ดูรายละเอียดโปรเจกต์",
       mockLabel: "MeVote screen mockup placeholder",
       mockImage:
         "https://placehold.co/1200x760/F3EFE7/111110/png?text=MeVote+Government+Voting+System",
     },
+    projectProcessLabel: "ขั้นตอนการทำงาน",
     featuredLabels: [
       ["Challenge", "challenge"],
       ["Outcome", "outcome"],
@@ -76,6 +127,12 @@ const content = {
           "แปลง service flow หน้างานโรงพยาบาลให้เป็น iPad WebView และ Queue Kiosk ที่หมอ พยาบาล และคนไข้เข้าใจร่วมกันได้",
         contribution:
           "ลงพื้นที่ร่วมกับ System Analyst, จัด screen flow, ปรับ UI revision และเตรียมรายละเอียดให้ทีมพัฒนานำไปต่อ",
+        steps: [
+          ["ลงพื้นที่ศึกษา", "ดู service flow จริงกับ System Analyst และทีมหน้างาน"],
+          ["Map service flow", "จัดลำดับ patient journey, queue และ touchpoint สำคัญ"],
+          ["Design WebView/Kiosk", "ออกแบบ mobile WebView และ kiosk UI ให้ใช้งานง่าย"],
+          ["Revision & handoff", "ปรับ UI ตาม feedback และส่งต่อรายละเอียดให้ทีมพัฒนา"],
+        ],
         tags: ["Healthcare", "Kiosk UI", "Screen flow"],
         mockLabel: "Hospital kiosk and patient WebView mockup placeholder",
         mockImage:
@@ -89,6 +146,12 @@ const content = {
           "ปรับ CRM product เดิมของบริษัทให้เข้ากับ Singer โดยคง feature หลักด้านแต้ม คูปอง และ backoffice พร้อมเพิ่ม entry ผ่าน LINE Rich Menu และ login flow ที่รองรับลูกค้าเก่าในฐานข้อมูลเดิมก่อนเชื่อมต่อ JPoint",
         contribution:
           "จัด flow จาก Rich Menu สู่ login/สมัครสมาชิก, เชื่อมข้อมูลลูกค้าเก่า, และวาง UI concept แบบ glass-style ให้เข้ากับช่วงที่เทรนด์ interface โปร่งใสกำลังเด่น",
+        steps: [
+          ["ศึกษา brand/CI", "ทำความเข้าใจ CI, tone และ visual direction ของ Singer"],
+          ["Audit CRM เดิม", "เทียบ flow ระบบ CRM เดิมที่บริษัทเคยทำให้เจ้าอื่น"],
+          ["Iterate mobile CRM", "ปรับ Rich Menu, login, JPoint และ legacy customer flow"],
+          ["Backoffice handoff", "ออกแบบ backoffice และส่งต่อ UI state/note ให้ทีมพัฒนา"],
+        ],
         tags: ["Rich Menu entry", "JPoint login", "Glass-style UI"],
         mockLabel: "Singer membership CRM mockup placeholder",
         mockImage:
@@ -102,6 +165,12 @@ const content = {
           "รวมผลงานการออกแบบหน้าจอขนาดเล็ก, งานแคมเปญโปรโมชั่น, ภาพประกอบ (Visual Assets) และงานสนับสนุนทีมพัฒนาอื่นๆ ที่ไม่ได้จัดทำเป็น Case Study เต็มรูปแบบ",
         contribution:
           "ออกแบบกราฟิก, จัดทำ UI Component เพิ่มเติม, และทำหน้าที่ Design QA เพื่อให้ผลลัพธ์ตรงกับที่วางแผนไว้",
+        steps: [
+          ["รับ visual brief", "ทำความเข้าใจ mood, channel และข้อจำกัดของงาน"],
+          ["Support UI/graphic", "ออกแบบ asset, component หรือ screen ย่อยตามโจทย์"],
+          ["Design QA", "ตรวจความถูกต้องของ visual, spacing และ component state"],
+          ["Delivery support", "เตรียมไฟล์และ note ให้ทีมใช้งานต่อได้ทันที"],
+        ],
         tags: ["Visual Assets", "UI Support", "Campaign"],
         mockLabel: "Other projects and visual support mockup",
         mockImage:
@@ -172,12 +241,19 @@ const content = {
       outcome:
         "Created a clearer voting experience and backoffice structure that reduced ambiguity between business requirements, UX decisions, and developer handoff.",
       deliverables: ["Voting flow", "User journey", "Confirmation UI", "Backoffice UX/UI", "Developer handoff"],
+      steps: [
+        ["Brief", "Clarified the voting context, system goals, and user groups."],
+        ["Map requirement", "Mapped public/private vote conditions and key permissions."],
+        ["Design flow/UI", "Structured voting flow, confirmation UI, and important states."],
+        ["Backoffice handoff", "Prepared screen structure and notes for development."],
+      ],
       tags: ["Government", "Voting System", "UX/UI", "Backoffice", "Workflow"],
       detailCta: "View project detail",
       mockLabel: "MeVote screen mockup placeholder",
       mockImage:
         "https://placehold.co/1200x760/F3EFE7/111110/png?text=MeVote+Government+Voting+System",
     },
+    projectProcessLabel: "Working steps",
     featuredLabels: [
       ["Challenge", "challenge"],
       ["Outcome", "outcome"],
@@ -192,6 +268,12 @@ const content = {
           "Translated hospital service flows into an iPad WebView and Queue Kiosk experience that doctors, nurses, and patients could understand.",
         contribution:
           "Worked with a System Analyst on-site, structured screen flows, revised UI, and prepared implementation-ready details.",
+        steps: [
+          ["On-site study", "Observed the real service flow with the System Analyst and staff."],
+          ["Map service flow", "Structured patient journey, queue steps, and key touchpoints."],
+          ["Design WebView/Kiosk", "Designed mobile WebView and kiosk UI for clear usage."],
+          ["Revision & handoff", "Revised UI from feedback and prepared developer details."],
+        ],
         tags: ["Healthcare", "Kiosk UI", "Screen flow"],
         mockLabel: "Hospital kiosk and patient WebView mockup placeholder",
         mockImage:
@@ -205,6 +287,12 @@ const content = {
           "Adapted the company’s existing CRM product for Singer, keeping the core point, coupon, and backoffice features while adding LINE Rich Menu entry and a login flow that handled existing customer records before connecting them to JPoint.",
         contribution:
           "Structured the Rich Menu-to-login journey, legacy-customer linking flow, and a glass-style UI concept inspired by the transparent interface direction that was gaining attention at the time.",
+        steps: [
+          ["Study brand/CI", "Studied Singer CI, tone, and visual direction."],
+          ["Audit CRM flow", "Reviewed existing CRM flows built for other clients."],
+          ["Iterate mobile CRM", "Adjusted Rich Menu, login, JPoint, and legacy customer flow."],
+          ["Backoffice handoff", "Designed backoffice flow and prepared UI states/notes."],
+        ],
         tags: ["Rich Menu entry", "JPoint login", "Glass-style UI"],
         mockLabel: "Singer membership CRM mockup placeholder",
         mockImage:
@@ -218,6 +306,12 @@ const content = {
           "A collection of smaller screen designs, promotional campaigns, visual assets, and other developer support tasks that are not formatted as full case studies.",
         contribution:
           "Designed graphics, created additional UI components, and performed Design QA to ensure the final output matched the intended design.",
+        steps: [
+          ["Visual brief", "Clarified mood, channel, and production constraints."],
+          ["UI/graphic support", "Designed assets, components, or smaller screens."],
+          ["Design QA", "Checked visual accuracy, spacing, and component states."],
+          ["Delivery support", "Prepared files and notes for team usage."],
+        ],
         tags: ["Visual Assets", "UI Support", "Campaign"],
         mockLabel: "Other projects and visual support mockup",
         mockImage:
@@ -261,6 +355,7 @@ export default function Home() {
   const featuredLabels = t.featuredLabels as [string, keyof typeof content.th.featured][];
   const moreProjects = t.moreProjects as typeof content.th.moreProjects;
   const processOutputs = t.processOutputs as string[];
+  const projectProcessLabel = t.projectProcessLabel as string;
   const [activeSection, setActiveSection] = useState("#home");
 
   useEffect(() => {
@@ -373,6 +468,7 @@ export default function Home() {
               <Image src={featured.mockImage} alt={featured.mockLabel} width={1200} height={760} />
             </div>
             <p>{featured.context}</p>
+            <ProjectProcess label={projectProcessLabel} steps={featured.steps} />
             <div className="deliverables" aria-label="MeVote deliverables">
               {featured.deliverables.map((item) => (
                 <span key={item}>{item}</span>
@@ -427,6 +523,7 @@ export default function Home() {
                   <Image src={project.mockImage} alt={project.mockLabel} width={1200} height={760} />
                 </div>
                 <p>{project.description}</p>
+                <ProjectProcess label={projectProcessLabel} steps={project.steps} />
                 <div className={`tag-list ${isWarm ? "" : "tag-list--dark"}`} aria-label={`${project.title} tags`}>
                   {project.tags.map((tag) => (
                     <span key={tag}>{tag}</span>
