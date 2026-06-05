@@ -468,7 +468,6 @@ export default function Home() {
               <Image src={featured.mockImage} alt={featured.mockLabel} width={1200} height={760} />
             </div>
             <p>{featured.context}</p>
-            <ProjectProcess label={projectProcessLabel} steps={featured.steps} />
             <div className="deliverables" aria-label="MeVote deliverables">
               {featured.deliverables.map((item) => (
                 <span key={item}>{item}</span>
@@ -484,14 +483,17 @@ export default function Home() {
             </Link>
           </div>
 
-          <dl className="project-showcase__side project-showcase__facts">
-            {featuredLabels.map(([label, key]) => (
-              <div key={label}>
-                <dt>{label}</dt>
-                <dd>{featured[key]}</dd>
-              </div>
-            ))}
-          </dl>
+          <div className="project-showcase__side">
+            <dl className="project-facts">
+              {featuredLabels.map(([label, key]) => (
+                <div key={label}>
+                  <dt>{label}</dt>
+                  <dd>{featured[key]}</dd>
+                </div>
+              ))}
+            </dl>
+            <ProjectProcess label={projectProcessLabel} steps={featured.steps} />
+          </div>
         </article>
       </section>
 
@@ -523,7 +525,6 @@ export default function Home() {
                   <Image src={project.mockImage} alt={project.mockLabel} width={1200} height={760} />
                 </div>
                 <p>{project.description}</p>
-                <ProjectProcess label={projectProcessLabel} steps={project.steps} />
                 <div className={`tag-list ${isWarm ? "" : "tag-list--dark"}`} aria-label={`${project.title} tags`}>
                   {project.tags.map((tag) => (
                     <span key={tag}>{tag}</span>
@@ -536,6 +537,7 @@ export default function Home() {
               <div className="project-showcase__side">
                 <span>{t.contributionLabel as string}</span>
                 <p>{project.contribution}</p>
+                <ProjectProcess label={projectProcessLabel} steps={project.steps} />
               </div>
             </article>
           </section>
